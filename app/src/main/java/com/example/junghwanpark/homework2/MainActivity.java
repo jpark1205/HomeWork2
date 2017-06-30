@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected ArrayList<NewsItem> doInBackground(URL... params)  {
             ArrayList<NewsItem> result = null;
-            URL url = NetworkUtils.makeURL("the-next-web", "latest"," "); //put the api to make it work
+            URL url = NetworkUtils.makeURL("the-next-web", "latest","31c866657ce04490867a8805b898a516"); //put the api to make it work
             Log.d(TAG, "aysnTaskurl: " + url.toString());
             try {
                 String json = NetworkUtils.getResponseFromHttpUrl(url);
@@ -111,6 +111,13 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(int clickedItemIndex) {
                         String url = data.get(clickedItemIndex).getUrl();
                         Log.d(TAG, String.format("Url %s", url));
+
+                        Uri wp = Uri.parse(url);
+                        Intent it = new Intent(Intent.ACTION_VIEW, wp);
+                        if(it.resolveActivity(getPackageManager()) != null){
+                            startActivity(it);
+                        }
+
                     }
                 });
                 rv.setAdapter(adapter);
